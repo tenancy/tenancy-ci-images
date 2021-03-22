@@ -6,8 +6,24 @@ on:
         - created
 
 jobs:
+    analyse:
+        name: Analysing Commit
+        runs-on: ubuntu-latest
+        outputs:
+            version: ${{ steps.version.outputs.version }}
+
+        steps:
+            - uses: actions/checkout@v2
+              with:
+                  fetch-depth: 0
+
+            - name: Get the version
+              id: version
+              run: echo ::set-output name=VERSION::${GITHUB_REF/refs\/tags\//}}})"
+
     build-php:
         runs-on: ubuntu-latest
+        needs: [analyse]
 
         strategy:
             matrix:
@@ -41,14 +57,15 @@ jobs:
                   push: true
                   context: .dev/Docker/Images/PHP
                   tags: |
-                    tenancy/tenancy-ci-php-${{ matrix.version }}:${{ github.ref }}-latest
-                    tenancy/tenancy-ci-php-${{ matrix.version }}:${{ github.ref }}
+                    tenancy/tenancy-ci-php-${{ matrix.version }}:${{ needs.analyse.outputs.version }}-latest
+                    tenancy/tenancy-ci-php-${{ matrix.version }}:${{ needs.analyse.outputs.version }}
                     tenancy/tenancy-ci-php-${{ matrix.version }}:latest
                   build-args: |
                     VERSION=${{ matrix.version }}
 
     build-mysql:
         runs-on: ubuntu-latest
+        needs: [analyse]
 
         strategy:
             matrix:
@@ -82,8 +99,8 @@ jobs:
                   push: true
                   context: .dev/Docker/Images/MySQL
                   tags: |
-                    tenancy/tenancy-ci-mysql-${{ matrix.version }}:${{ github.ref }}-latest
-                    tenancy/tenancy-ci-mysql-${{ matrix.version }}:${{ github.ref }}
+                    tenancy/tenancy-ci-mysql-${{ matrix.version }}:${{ needs.analyse.outputs.version }}-latest
+                    tenancy/tenancy-ci-mysql-${{ matrix.version }}:${{ needs.analyse.outputs.version }}
                     tenancy/tenancy-ci-mysql-${{ matrix.version }}:latest
                   build-args: |
                     VERSION=${{ matrix.version }}
