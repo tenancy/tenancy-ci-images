@@ -27,7 +27,7 @@ jobs:
 
         strategy:
             matrix:
-                version: ['7.2', '7.3', '7.4', '8.0']
+                version: ['7.2', '7.3', '7.4', '8.0', '8.1']
             
         name: 'Docker Image PHP Release ${{ matrix.version }}'
 
