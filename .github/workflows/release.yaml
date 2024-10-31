@@ -52,7 +52,7 @@ jobs:
               run: echo "Building Images for PHP ${{ matrix.version }}"
 
             - name: Build and push
-              uses: docker/build-push-action@v5
+              uses: docker/build-push-action@v6
               with:
                   push: true
                   context: .dev/Docker/Images/PHP
@@ -94,7 +94,7 @@ jobs:
               run: echo "Building Images for MySQL ${{ matrix.version }}"
 
             - name: Build and push
-              uses: docker/build-push-action@v5
+              uses: docker/build-push-action@v6
               with:
                   push: true
                   context: .dev/Docker/Images/MySQL
