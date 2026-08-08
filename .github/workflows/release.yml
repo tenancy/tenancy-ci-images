@@ -13,7 +13,7 @@ jobs:
             version: ${{ steps.version.outputs.version }}
 
         steps:
-            - uses: actions/checkout@v6
+            - uses: actions/checkout@v7
               with:
                   fetch-depth: 0
 
@@ -32,7 +32,7 @@ jobs:
         name: 'Docker Image PHP Release ${{ matrix.version }}'
 
         steps:
-            - uses: actions/checkout@v6
+            - uses: actions/checkout@v7
               with:
                   fetch-depth: 0
 
@@ -72,7 +72,7 @@ jobs:
         name: 'Docker Image MySQL Release ${{ matrix.version }}'
 
         steps:
-            - uses: actions/checkout@v6
+            - uses: actions/checkout@v7
               with:
                   fetch-depth: 0
 
